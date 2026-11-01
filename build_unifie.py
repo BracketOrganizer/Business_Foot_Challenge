@@ -85,5 +85,7 @@ a.card.last{border-color:#6ee790;box-shadow:0 0 0 2px rgba(110,231,144,.25)}
 </body>
 </html>
 '''
-open(os.path.join(BASE,OUT),'w',encoding='utf-8',newline='\n').write(TEMPLATE.replace('@@BLOCKS@@','\n'.join(blocks)))
-print('OK ->',OUT, round(os.path.getsize(os.path.join(BASE,OUT))/1024),'Ko')
+html = TEMPLATE.replace('@@BLOCKS@@', chr(10).join(blocks))
+with open(os.path.join(BASE, OUT), 'w', encoding='utf-8', newline=chr(10)) as fh:
+    fh.write(html)
+print('OK ->', OUT, round(os.path.getsize(os.path.join(BASE, OUT)) / 1024), 'Ko')
