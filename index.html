@@ -784,7 +784,7 @@ async function saveRoster(teamId, players, referees){
   try {
     const data = { players, updatedAt: serverTimestamp() };
     if(Array.isArray(referees)) data.referees = referees; // arbitres de l'équipe (arbitrage tournant)
-    await setDoc(doc(db,'teamRosters',teamId), data, { merge:true });
+    await setDoc(doc(db,'teamRosters20',teamId), data, { merge:true });
     ROSTERS[teamId] = { ...(ROSTERS[teamId]||{}), players, ...(Array.isArray(referees) ? { referees } : {}) };
   } catch(e){
     console.error('saveRoster', e);
@@ -2145,7 +2145,7 @@ window.submitManualRegistration = async function(){
     await saveTournament({ teams: ST.teams });
     const warn = [];
     for(const t of newTeams){
-      try { await setDoc(doc(db,'teamRosters',t.id), { players: [], updatedAt: serverTimestamp() }); }
+      try { await setDoc(doc(db,'teamRosters20',t.id), { players: [], updatedAt: serverTimestamp() }); }
       catch(e){ console.warn('teamRosters', e); warn.push(t.name); }
     }
     let html = `✅ ${newTeams.length} équipe${newTeams.length>1?'s':''} inscrite${newTeams.length>1?'s':''} pour <b>${regEsc(club)}</b> : ${newTeams.map(t=>regEsc(t.name)).join(' · ')}.`;
@@ -2260,7 +2260,7 @@ window.approveRegistration = async function(uid){
     ST.teams.push(...newTeams);
     await saveTournament({ teams: ST.teams });
     for(const t of newTeams){
-      try { await setDoc(doc(db,'teamRosters',t.id), { players: [], updatedAt: serverTimestamp() }); }
+      try { await setDoc(doc(db,'teamRosters20',t.id), { players: [], updatedAt: serverTimestamp() }); }
       catch(e){ console.warn('Création teamRosters (inscription) échouée (non bloquant)', e); }
     }
     await updateDoc(doc(db,'users',uid), { role:'manager', teamId:newTeams[0].id, extraTeamIds:newTeams.slice(1).map(t=>t.id), tournament:'foot20', regStatus:'approved' });
