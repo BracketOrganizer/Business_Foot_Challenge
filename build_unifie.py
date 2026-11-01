@@ -4,15 +4,27 @@ Usage : python3 build_unifie.py   (les 3 fichiers Foot_inter_entreprises_Challen
 import re, sys, json, os
 SRC = {20:'Foot_inter_entreprises_Challenge_20.html', 24:'Foot_inter_entreprises_Challenge_24.html', 32:'Foot_inter_entreprises_Challenge_32.html'}
 LABEL = {20:'20 équipes', 24:'24 équipes', 32:'32 équipes'}
-OUT = 'Foot_inter_entreprises.html'
+OUT = 'index.html'   # page d'accueil du dépôt (GitHub Pages)
+
+import unicodedata
+BASE = os.path.dirname(os.path.abspath(__file__))
+def find_src(name):
+    """Cherche le fichier dans Sources/, sources/ ou à côté du script (insensible aux accents NFC/NFD)."""
+    want = unicodedata.normalize('NFC', name)
+    for d in ('Sources', 'sources', '.'):
+        folder = os.path.join(BASE, d)
+        if not os.path.isdir(folder): continue
+        for f in os.listdir(folder):
+            if unicodedata.normalize('NFC', f) == want:
+                return os.path.join(folder, f)
+    sys.exit('Fichier manquant : ' + name + ' (à placer dans le dossier Sources/)')
 
 def esc(s):  # protège le contenu dans <script type="text/plain">
     return s.replace('<!--','<\\!--').replace('</script','<\\/script').replace('<script','<\\script')
 
 blocks=[]
 for n,fn in SRC.items():
-    if not os.path.exists(fn): sys.exit('Fichier manquant : '+fn)
-    s=open(fn,encoding='utf-8',newline='').read().replace('\r\n','\n')
+    s=open(find_src(fn),encoding='utf-8',newline='').read().replace('\r\n','\n')
     blocks.append(f'<script type="text/plain" id="app{n}">\n{esc(s)}\n</script>')
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -73,5 +85,5 @@ a.card.last{border-color:#6ee790;box-shadow:0 0 0 2px rgba(110,231,144,.25)}
 </body>
 </html>
 '''
-open(OUT,'w',encoding='utf-8',newline='\n').write(TEMPLATE.replace('@@BLOCKS@@','\n'.join(blocks)))
-print('OK ->',OUT, round(os.path.getsize(OUT)/1024),'Ko')
+open(os.path.join(BASE,OUT),'w',encoding='utf-8',newline='\n').write(TEMPLATE.replace('@@BLOCKS@@','\n'.join(blocks)))
+print('OK ->',OUT, round(os.path.getsize(os.path.join(BASE,OUT))/1024),'Ko')
