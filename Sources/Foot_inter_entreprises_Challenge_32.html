@@ -48,7 +48,7 @@ const db        = getFirestore(app);
 const gProvider = new GoogleAuthProvider();
 
 // ══════════════════════════════════════════════════════════
-// ÉTAT GLOBAL — Challenge Inter-Entreprises (32 équipes = 2 tournois de 16 ; 8 poules de 4)
+// ÉTAT GLOBAL — Challenge Inter-Entreprises (32 équipes ; 8 poules de 4)
 // Rôles : 'admin' | 'scorer' | 'spectator'
 // ══════════════════════════════════════════════════════════
 let CURRENT_USER = null;
@@ -3379,7 +3379,7 @@ function toggleRefPerCourtVisibility(){
 }
 function getCfg(){
   return {
-    n:              32, // format officiel fixe : 32 équipes (2 tournois de 16 = 8 poules de 4)
+    n:              32, // format officiel fixe : 32 équipes (8 poules de 4)
     courts:         +(document.getElementById('cfg_courts')?.value||6),
     matchDur:       +(document.getElementById('cfg_matchdur')?.value||12),
     matchDurBracket:+(document.getElementById('cfg_matchdur_bracket')?.value||12),
@@ -3465,7 +3465,7 @@ window.onCfgChange = function(){
     infoEl.className='info info-b';
     infoEl.innerHTML = `🏟️ <strong>${n} équipes</strong> réparties en <strong>4 poules</strong> de ${teamsPerPool} · <strong>${courts} terrain${courts>1?'s':''}</strong><br>
     📅 Phase de poules : ~<strong>${journees} journées</strong> + créneau T.A.B., durée estimée <strong>${Math.round(poolDuration/60*10)/10}h</strong><br>
-    🏆 Phase finale : <strong>64 matchs</strong> (4 tours : 2 tournois de 16, puis classement général) + créneaux T.A.B., durée estimée <strong>${Math.round(bracketDuration/60*10)/10}h</strong>`;
+    🏆 Phase finale : <strong>64 matchs</strong> (4 tours, dont le classement général) + créneaux T.A.B., durée estimée <strong>${Math.round(bracketDuration/60*10)/10}h</strong>`;
   }
 
   const start=document.getElementById('cfg_start')?.value||'09:00';
@@ -3521,7 +3521,7 @@ function renderTeamsPage(){
 
 window.addTeam = async function(){
   if(!isAdmin()) return;
-  if(ST.teams.length>=32){ alert('Le tournoi est limité à 32 équipes (format officiel : 2 tournois de 16).'); return; }
+  if(ST.teams.length>=32){ alert('Le tournoi est limité à 32 équipes (format officiel : 32 équipes).'); return; }
   const name = document.getElementById('t_name').value.trim();
   const club = document.getElementById('t_club').value.trim() || name;
   const respNom = document.getElementById('t_resp').value.trim();
@@ -5649,7 +5649,7 @@ label[for="cfg_refon"], label[for="cfg_teamrefon"]{ font-size:14px!important; te
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-brand">⚽ Challenge Inter-Entreprises</div>
-    <div class="login-sub">Challenge Inter-Entreprises · 32 équipes · 2 tournois de 16</div>
+    <div class="login-sub">Challenge Inter-Entreprises · 32 équipes<br>8 poules de 4 · 7 matchs par équipe</div>
     <div id="authMsg" style="text-align:center;font-size:13px;min-height:18px;margin-bottom:16px;color:var(--red)"></div>
 
     <!-- ══ ZONE SPECTATEURS ══ -->
@@ -5954,7 +5954,7 @@ label[for="cfg_refon"], label[for="cfg_teamrefon"]{ font-size:14px!important; te
         <div>
           <label>Nombre d'équipes</label>
           <input type="number" id="cfg_n" value="32" min="32" max="32" step="1" readonly title="Nombre d'équipes" aria-label="Nombre d'équipes" oninput="onCfgChange()">
-          <div style="font-size:10px;color:var(--dim);margin-top:3px">🔒 Format officiel : 32 équipes = 2 tournois de 16 (8 poules de 4)</div>
+          <div style="font-size:10px;color:var(--dim);margin-top:3px">🔒 Format officiel : 32 équipes (8 poules de 4)</div>
         </div>
         <div>
           <label>Nombre de terrains</label>
@@ -6245,7 +6245,7 @@ label[for="cfg_refon"], label[for="cfg_teamrefon"]{ font-size:14px!important; te
     <h4>Article 3 : Déroulement Général et Ponctualité</h4>
     <p>Le tournoi se déroule en deux phases :</p>
     <ul>
-      <li>Phase 1 : Formule championnat — 8 poules de 4 équipes, réparties en 2 tournois de 16 équipes (Tournoi 1 : poules A à D ; Tournoi 2 : poules E à H).</li>
+      <li>Phase 1 : Formule championnat — 8 poules de 4 équipes (Tournoi 1 : poules A à D ; Tournoi 2 : poules E à H).</li>
       <li>Phase Finale : élimination directe dans chaque tournoi selon le classement de la phase 1, puis matchs de classement général entre les deux tournois.</li>
     </ul>
     <p>La ponctualité est impérative. Les équipes doivent se présenter au terrain désigné 4 minutes avant le début de leur match. En cas d'absence, sauf force majeure dûment constatée par l'organisation, l'équipe est déclarée forfait. Le match est alors considéré comme perdu (voir Article 5 pour l'attribution des points).</p>
