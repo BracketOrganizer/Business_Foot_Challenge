@@ -53,9 +53,9 @@ a.card.last{border-color:#6ee790;box-shadow:0 0 0 2px rgba(110,231,144,.25)}
 <div class="box">
   <h1>⚽ Challenge Inter-Entreprises</h1>
   <p>Choisissez le format du tournoi</p>
-  <a class="card" data-f="20" href="?f=20"><span class="num">20</span><span class="lbl">20 équipes<small>4 poules de 5</small></span></a>
-  <a class="card" data-f="24" href="?f=24"><span class="num">24</span><span class="lbl">24 équipes<small>Challenge à 24 équipes</small></span></a>
-  <a class="card" data-f="32" href="?f=32"><span class="num">32</span><span class="lbl">32 équipes<small>8 poules de 4 · 2 tournois</small></span></a>
+  <a class="card" data-f="20" href="?f=20"><span class="num">20</span><span class="lbl">20 équipes<small>4 poules de 5 · 6 matchs par équipe</small></span></a>
+  <a class="card" data-f="24" href="?f=24"><span class="num">24</span><span class="lbl">24 équipes<small>4 poules de 6 · 8 matchs par équipe</small></span></a>
+  <a class="card" data-f="32" href="?f=32"><span class="num">32</span><span class="lbl">32 équipes<small>8 poules de 4 · 7 matchs par équipe</small></span></a>
 </div>
 @@BLOCKS@@
 <script>
