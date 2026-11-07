@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Génère index.html « Foot Entreprises Challenge » (menu 20/24/32) à partir des 3 fichiers sources.
+"""Génère index.html « Business Foot Challenge » (menu 20/24/32) à partir des 3 fichiers sources.
 Usage : python3 build_unifie.py   (les 3 fichiers Foot_inter_entreprises_Challenge_XX.html dans le même dossier)"""
 import re, sys, json, os
 SRC = {20:'Foot_inter_entreprises_Challenge_20.html', 24:'Foot_inter_entreprises_Challenge_24.html', 32:'Foot_inter_entreprises_Challenge_32.html'}
@@ -31,7 +31,7 @@ for n,fn in SRC.items():
 _first = blocks and open(find_src(SRC[20]),encoding='utf-8').read()
 _m1 = re.search(r'--logo-fec:url\((data:[^)]+)\)', _first)
 _m2 = re.search(r'--logo-ffse:url\((data:[^)]+)\)', _first)
-if not (_m1 and _m2): sys.exit('Logos introuvables dans ' + SRC[20] + ' (utiliser les apps « Foot Entreprises Challenge »)')
+if not (_m1 and _m2): sys.exit('Logos introuvables dans ' + SRC[20] + ' (utiliser les apps « Business Foot Challenge »)')
 LOGO_FEC, LOGO_FFSE = _m1.group(1), _m2.group(1)
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -41,18 +41,18 @@ TEMPLATE = r'''<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f4a1f">
 <link rel="icon" type="image/jpeg" href="@@FEC@@">
-<title>⚽ Foot Entreprises Challenge</title>
+<title>⚽ Business Foot Challenge</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;display:none;align-items:center;justify-content:center;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;color:#fff;background:radial-gradient(ellipse at top,#145a28 0%,#0a2e15 60%,#04140a 100%)}
 .box{width:100%;max-width:460px;text-align:center}
 body{background:radial-gradient(ellipse at 50% 0%,#1f7a3a 0%,#0f4a1f 55%,#08301a 100%)}
-.logo{display:block;width:190px;height:auto;aspect-ratio:220/218;margin:0 auto 14px;border-radius:22px;border:3px solid rgba(255,255,255,.9);box-shadow:0 8px 28px rgba(0,0,0,.5)}
+.logo{display:block;width:190px;height:190px;object-fit:contain;background:#fff;padding:8px;margin:0 auto 14px;border-radius:24px;border:3px solid rgba(255,255,255,.9);box-shadow:0 8px 28px rgba(0,0,0,.5)}
 h1{font-family:Oswald,'Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.1;margin:0 0 8px;text-transform:uppercase;letter-spacing:1.5px;text-shadow:0 2px 6px rgba(0,0,0,.4)}
 .sub{margin:0 0 4px;color:#ffd36b;font-size:13px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
 p{margin:0 0 22px;color:#c9f5d6;font-size:14px}
-.fed{margin:26px auto 0;padding:14px 18px;background:#fff;border-radius:16px;display:inline-block;box-shadow:0 6px 20px rgba(0,0,0,.35)}
-.fed img{display:block;width:230px;max-width:60vw;height:auto}
+.fed{margin:26px auto 0;padding:10px;background:#fff;border-radius:18px;display:inline-block;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.fed img{display:block;width:150px;max-width:45vw;height:auto;border-radius:10px}
 @media(max-width:600px){.logo{width:150px}h1{font-size:25px}}
 a.card{display:flex;align-items:center;gap:16px;margin:12px 0;padding:18px 20px;border-radius:16px;text-decoration:none;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);transition:.15s}
 a.card:hover,a.card:active{background:rgba(255,255,255,.16);transform:translateY(-1px)}
@@ -64,8 +64,8 @@ a.card.last{border-color:#6ee790;box-shadow:0 0 0 2px rgba(110,231,144,.25)}
 </head>
 <body>
 <div class="box">
-  <img class="logo" src="@@FEC@@" alt="Logo Foot Entreprises Challenge">
-  <h1>Foot Entreprises Challenge</h1>
+  <img class="logo" src="@@FEC@@" alt="Logo Business Foot Challenge">
+  <h1>Business Foot Challenge</h1>
   <div class="sub">Tournoi inter-entreprises</div>
   <p>Choisissez le format du tournoi</p>
   <a class="card" data-f="20" href="?f=20"><span class="num">20</span><span class="lbl">20 équipes<small>4 poules de 5 · 6 matchs par équipe</small></span></a>
