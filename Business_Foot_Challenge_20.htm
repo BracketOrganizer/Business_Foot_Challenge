@@ -3376,6 +3376,7 @@ function updateRulesDyn(){
       if(m){ d.textContent='Date du tournoi : '+new Date(+m[1],+m[2]-1,+m[3]).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); d.style.display=''; }
       else d.style.display='none';
     }
+    const rt=document.getElementById('rulesRefTeam'); if(rt) rt.style.display = c.teamRefereeingEnabled ? '' : 'none';
     const u=document.getElementById('rulesDur');
     if(u){
       const a=+c.matchDur||10, b=+c.matchDurBracket||a;
@@ -6357,12 +6358,11 @@ input[type=date]{ width:100%;padding:9px 12px;background:var(--s2);border:1.5px 
   <div class="rules-section">
     <h4>Article 11 — Arbitrage et litiges</h4>
     <p>L'arbitre central est désigné par l'organisation, selon le planning publié. Il est seul juge des faits de jeu : ses décisions sont sans appel.</p>
-    <p>Chaque équipe désigne, pour chaque rencontre, des joueurs chargés d'assurer la fonction d'arbitre de touche.</p>
+    <p id="rulesRefTeam" style="display:none">Arbitrage par les équipes : chaque match est arbitré par une équipe qui ne joue pas à cet horaire (en phase de poules, une équipe d'une autre poule ; en phase finale, une équipe libre à cet horaire), désignée par l'organisation dans le planning publié. Une équipe n'arbitre jamais son propre match. L'équipe désignée fournit l'arbitre central de la rencontre.</p>
     <p>Le Comité d'Organisation est seul compétent pour trancher tout litige. Ses décisions sont définitives. Aucune réclamation n'est recevable après la fin du tournoi.</p>
   </div>
   <div class="rules-section">
-    <h4>Article 12 — Responsabilité et assurance</h4>
-    <p>Chaque participant est couvert par l'assurance liée à sa licence événementielle, comprise dans les frais d'adhésion.</p>
+    <h4>Article 12 — Responsabilité</h4>
     <p>L'organisation ne peut être tenue responsable des objets personnels perdus, volés ou détériorés dans l'enceinte du tournoi.</p>
   </div>
 </div>
