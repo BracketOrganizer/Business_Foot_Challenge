@@ -8,16 +8,23 @@ OUT = 'index.html'   # page d'accueil du dépôt (GitHub Pages)
 
 import unicodedata
 BASE = os.path.dirname(os.path.abspath(__file__))
+# Noms acceptés pour chaque fichier source (nom d'origine, puis noms utilisés dans le dépôt GitHub)
+ALT = {
+    'Foot_inter_entreprises_Challenge_20.html': ['Business_Foot_Challenge_20.htm', 'Business_Foot_Challenge_20.html'],
+    'Foot_inter_entreprises_Challenge_24.html': ['Business_Foot_Challenge_24.htm', 'Business_Foot_Challenge_24.html'],
+    'Foot_inter_entreprises_Challenge_32.html': ['Business_Foot_Challenge_32.htm', 'Business_Foot_Challenge_32.html'],
+}
 def find_src(name):
-    """Cherche le fichier dans Sources/, sources/ ou à côté du script (insensible aux accents NFC/NFD)."""
-    want = unicodedata.normalize('NFC', name)
-    for d in ('Sources', 'sources', '.'):
-        folder = os.path.join(BASE, d)
-        if not os.path.isdir(folder): continue
-        for f in os.listdir(folder):
-            if unicodedata.normalize('NFC', f) == want:
-                return os.path.join(folder, f)
-    sys.exit('Fichier manquant : ' + name + ' (à placer dans le dossier Sources/)')
+    """Cherche le fichier (ou l'un de ses noms alternatifs) dans Sources/, sources/ ou à côté du script (insensible aux accents NFC/NFD)."""
+    wants = [unicodedata.normalize('NFC', x) for x in [name] + ALT.get(name, [])]
+    for want in wants:
+        for d in ('Sources', 'sources', '.'):
+            folder = os.path.join(BASE, d)
+            if not os.path.isdir(folder): continue
+            for f in os.listdir(folder):
+                if unicodedata.normalize('NFC', f) == want:
+                    return os.path.join(folder, f)
+    sys.exit('Fichier manquant : ' + name + ' (ou ' + ' / '.join(ALT.get(name, [])) + ') — à placer dans le dossier Sources/ ou à côté du script')
 
 def esc(s):  # protège le contenu dans <script type="text/plain">
     return s.replace('<!--','<\\!--').replace('</script','<\\/script').replace('<script','<\\script')
